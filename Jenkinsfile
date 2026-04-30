@@ -9,7 +9,7 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
-
+    // Build
     stages {
         stage ('Read package.json') {
             steps {
@@ -32,16 +32,7 @@ pipeline {
         //     }
         // }
         
-        stage('Build') {
-            steps {
-                script {
-                    sh """
-                        echo "Hello Build"
-                        sleep 10
-                       """
-                }
-            }
-        }
+        
         stage('Test') {
             steps {
                 script {
