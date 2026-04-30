@@ -4,7 +4,7 @@ COPY package.json .
 COPY *.js .
 RUN npm install
 
-FROM node:20-alphine3.21
+FROM node:20-alpine3.21
 RUN addgroup -S electronic-shop && adduser -S electronic-shop -G electronic-shop
 RUN chown -R electronic-shop:electronic-shop /opt/server
 ENV MONGO="true" \
