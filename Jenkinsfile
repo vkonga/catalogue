@@ -3,7 +3,7 @@ pipeline {
         label 'AGENT-1'
     }
     environment {
-        appVersion: ''
+        appVersion = ''
     }
     options {
         timeout(time: 30, unit: 'MINUTES')
