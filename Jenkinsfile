@@ -4,6 +4,8 @@ pipeline {
     }
     environment {
         appVersion = ''
+        region = 'us-east-1'
+        accountId = '781195020338'
     }
     options {
         timeout(time: 30, unit: 'MINUTES')
@@ -28,6 +30,21 @@ pipeline {
                         npm install
 
                         """
+                }
+            }
+        }
+
+        stage ('Docker Build') {
+            steps {
+                script {
+                    withAWS(credentials: 'aws-auth', region: ${region}) {
+                        sh """
+                            aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+                            docker build -t electronic-shop/catalogue:latest ${accountId}.dkr.ecr.${us-east-1}.amazonaws.com/electronic-shop/catalogue:${appVersion}
+                            docker push electronic-shop/catalogue:latest ${accountId}.dkr.ecr.${us-east-1}.amazonaws.com/electronic-shop/catalogue:${appVersion}
+                            """
+                    }
+                
                 }
             }
         }
